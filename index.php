@@ -1,5 +1,6 @@
 <?php
   session_start();
+  // unset($_SESSION['currentPath']);
   $root = 'root';
   if(!(file_exists($root) && is_dir($root))) {
     mkdir($root);
