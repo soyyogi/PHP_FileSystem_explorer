@@ -36,6 +36,7 @@
   </header>
   <main>
     <h2>This will be the main body part</h2>
+    <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
     <ul>
 <?php
   foreach( $currentTree as $i => $name) {
