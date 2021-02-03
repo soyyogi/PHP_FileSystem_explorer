@@ -1,10 +1,14 @@
 <?php
+  session_start();
   $root = 'root';
   if(!(file_exists($root) && is_dir($root))) {
     mkdir($root);
   }
-  $rootTree = array_slice(scandir($root), 2);
-  // print_r($rootTree);
+  if (!isset($_SESSION['currentPath'])) {
+    $_SESSION['currentPath'] = $root;
+  }
+  $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
+  // print_r($currentTree);
 
 
 ?>
@@ -33,7 +37,7 @@
     <h2>This will be the main body part</h2>
     <ul>
 <?php
-  foreach( $rootTree as $i => $name) {
+  foreach( $currentTree as $i => $name) {
     echo '<li><a href="">'. $name . '</a></li>';
   }
 
