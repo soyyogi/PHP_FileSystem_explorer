@@ -1,3 +1,14 @@
+<?php
+  $root = 'root';
+  if(!(file_exists($root) && is_dir($root))) {
+    mkdir($root);
+  }
+  $rootTree = array_slice(scandir($root), 2);
+  print_r($rootTree);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
