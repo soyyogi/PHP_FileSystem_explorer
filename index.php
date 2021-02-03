@@ -38,7 +38,7 @@
     <ul>
 <?php
   foreach( $currentTree as $i => $name) {
-    echo '<li><a href="">'. $name . '</a></li>';
+    echo '<li><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name='.$name.'&action=open">'. $name . '</a></li>';
   }
 
 ?>
