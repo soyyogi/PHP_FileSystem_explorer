@@ -4,7 +4,7 @@
     mkdir($root);
   }
   $rootTree = array_slice(scandir($root), 2);
-  print_r($rootTree);
+  // print_r($rootTree);
 
 
 ?>
@@ -31,6 +31,14 @@
   </header>
   <main>
     <h2>This will be the main body part</h2>
+    <ul>
+<?php
+  foreach( $rootTree as $i => $name) {
+    echo '<li><a href="">'. $name . '</a></li>';
+  }
+
+?>
+    </ul>
   </main>
 </body>
 </html>
