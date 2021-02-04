@@ -8,6 +8,9 @@ if($_POST['type']) {
         case 'dir':
             if(!(file_exists($path) && is_dir($path))) {
                 mkdir($path);
+                $_SESSION['message'] = 'Successfully created new directory!';
+            } else {
+                $_SESSION['message'] = 'Directory already exists!';
             }
             break;
         case 'txt':
@@ -15,6 +18,9 @@ if($_POST['type']) {
                 $file = fopen($path . '.txt', 'a+');
                 fwrite($file, $_POST['body']);
                 fclose($file);
+                $_SESSION['message'] = 'Successfully created new text file!';
+            } else {
+                $_SESSION['message'] = 'File already exists!';
             }
             break;
         case 'docx':
@@ -22,12 +28,14 @@ if($_POST['type']) {
                 $file = fopen($path . '.docx', 'a+');
                 fwrite($file, $_POST['body']);
                 fclose($file);
+                $_SESSION['message'] = 'Successfully created new MS word file!';
+            } else {
+                $_SESSION['message'] = 'File already exists!';
             }
             break;
         default:
-            echo 'unsupported type';
+            $_SESSION['message'] = 'Unsupported file type!';
     }
-    header('Location: http://localhost/PHP_FileSystem_explorer');
 }
 
 if(isset($_GET['action'])){
@@ -41,7 +49,6 @@ if(isset($_GET['action'])){
                     $_SESSION['currentPath'] = $path;
                 }
             }
-            header('Location: http://localhost/PHP_FileSystem_explorer');
             break;
         case 'previousDir':
             $endPos = strrpos($_SESSION['currentPath'], '/');
@@ -49,9 +56,10 @@ if(isset($_GET['action'])){
             if (file_exists($path) && is_dir($path)) {
                 $_SESSION['currentPath'] = $path;
             }
-            header('Location: http://localhost/PHP_FileSystem_explorer');
             break;
         default:
-            echo 'unsupported action';
+            $_SESSION['message'] = 'Unsupported action!';
     }
 }
+
+header('Location: http://localhost/PHP_FileSystem_explorer');
