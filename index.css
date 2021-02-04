@@ -58,6 +58,7 @@
 
 #create-item-form {
   display: none;
+  flex-direction: column;
   position: fixed;
   top: 30%;
   left: 50%;

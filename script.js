@@ -6,7 +6,7 @@ document.querySelector('.create-new-item').addEventListener('click', newItem);
 
 
 function createItem() {
-    document.querySelector('#create-item-form').style.display = 'block';
+    document.querySelector('#create-item-form').style.display = 'flex';
     const type = this.classList[1];
     document.querySelector('#create-item-form #type').value = type;
     if(type !== 'dir') {
