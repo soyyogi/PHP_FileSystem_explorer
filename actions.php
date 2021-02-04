@@ -69,7 +69,9 @@ if (isset($_GET['action'])) {
                                 is_dir($item) ? delRecurse($item) : unlink($item);
                             }
                             rmdir($path);
-                        }    
+                        } elseif(is_file($path)){
+                            unlink($path);
+                        }
                     }
                     delRecurse($path);
                     $_SESSION['message'] = 'Successfully deleted!';
