@@ -1,5 +1,6 @@
 <?php
 session_start();
+$base = $_SESSION['basePath'];
 
 if (isset($_POST['type'])) {
     $type = $_POST['type'];
@@ -100,7 +101,7 @@ if (isset($_GET['action'])) {
                 }
                 if (file_exists($path) && is_file($path)) {
                     if (substr($name, -4) == '.txt') {
-                        // $path = 'http://localhost/PHP_FileSystem_explorer/' . $path;
+                        // $path = $base . '/' . $path;
                         // header("Location: $path");
                         // die();
                         $file = fopen($path, 'r');
@@ -109,7 +110,7 @@ if (isset($_GET['action'])) {
                         $_SESSION['fileContent'] = $content;
                         fclose($file);
                     } else {
-                        $path = 'http://localhost/PHP_FileSystem_explorer/' . $path;
+                        $path = $base . '/' . $path;
                         header("Location: $path");
                         die();
                     }
@@ -150,4 +151,4 @@ if (isset($_GET['action'])) {
     }
 }
 
-header('Location: http://localhost/PHP_FileSystem_explorer');
+header("Location: $base");
