@@ -1,6 +1,6 @@
 <?php
 session_start();
-$user = 'yogi';
+$user = 'fabri';
 $_SESSION['basePath'] = $user === 'yogi' ? 'http://localhost/PHP_FileSystem_explorer' : 'http://192.168.64.2/PHP_FileSystem_explorer';
 // unset($_SESSION['currentPath']);
 $root = 'root';
@@ -24,13 +24,21 @@ function checktype($name)
       return 'txt';
     } elseif (substr($name, -5) == '.docx') {
       return 'docx';
-    } elseif (substr($name, -5) == '.jpeg' || substr($name, -4) == '.jpg' || substr($name, -4) == '.png') {
+    } elseif (substr($name, -5) == '.jpeg' || substr($name, -4) == '.jpg' || substr($name, -4) == '.png' || substr($name, -4) == '.svg') {
       return 'img';
     } elseif (substr($name, -4) == '.mp3') {
       return 'mp3';
     } elseif (substr($name, -4) == '.pdf') {
       return 'pdf';
-    } 
+    } elseif (substr($name, -4) == '.mp4') {
+      return 'mp4';
+    } elseif (substr($name, -4) == '.ppt') {
+      return 'ppt';
+    } elseif (substr($name, -4) == '.csv') {
+      return 'csv';
+    } elseif (substr($name, -4) == '.zip' || substr($name, -4) == '.rar' || substr($name, -4) == '.exe') {
+      return 'zip';
+    }
   }
   return 'unknown';
 }
@@ -42,9 +50,20 @@ $icons = [
   'img' => '<i class="far fa-image"></i>',
   'mp3' => '<i class="far fa-file-audio"></i>',
   'unknown' => '<i class="far fa-file"></i>',
-  'pdf' => '<i class="far fa-file-pdf"></i>'
+  'pdf' => '<i class="far fa-file-pdf"></i>',
+  'csv' => '<i class="far fa-file-excel"></i>',
+  'ppt' => '<i class="far fa-file-powerpoint"></i>',
+  'zip' => '<i class="far fa-file-archive"></i>',
+  'mp4' => '<i class="far fa-file-video"></i>'
 ];
 
+function convertSize($bytes, $precision=2) {
+  if ($bytes >= 1048576) {
+    return $bytes = number_format($bytes / 1048576, 2) . ' MB';
+  } else {
+    return $bytes = number_format($bytes / 1024, 2) . ' KB';
+  }
+}
 
 ?>
 
@@ -54,7 +73,6 @@ $icons = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
   <script defer src="./script.js"></script>
   <script src="https://kit.fontawesome.com/1935655a46.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css">
@@ -64,8 +82,14 @@ $icons = [
 <body>
   <header>
     <div class="header">
-      <a href="/" class="logo">Logo</a>
-      <input type="search" class="input-search" placeholder="search">
+      <a href="<?=$_SESSION['basePath']?>" class="logo">
+        <i class="fab fa-google-drive"></i>
+        Docs
+      </a>
+      <div class="search-form">
+        <i class="fas fa-search"></i>
+        <input type="search" class="input-search" placeholder="search">
+      </div>
       <ul class="header-list">
         <li class="upload-file header-link">Upload</li>
         <li class="create-new-item header-link">
@@ -99,20 +123,27 @@ $icons = [
 
     ?>
 
-    <h3><a href="<?=$_SESSION['basePath'] . '/actions.php?action=previousDir'?>">&#8617;</a></h3>
+    <h3>
+      <a href="<?=$_SESSION['basePath'] . '/actions.php?action=previousDir'?>" class="back-arrow">&#8617;</a>
+    </h3>
     <ul>
       <?php
       foreach ($currentTree as $i => $name) {
 
-        echo '<li class="currentTree-item"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">' . $icons[checktype($name)] . ' ' . $name . '</a>
-        <span class="show-actions">&#10247;
-          <ul class="action-options hidden">
-            <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
-            <!-- <li class="action-option">Edit</li>
-            <li class="action-option">Rename</li> -->
-            <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
-          </ul>
-        </span>
+        echo '<li class="currentTree-item">
+          <span>'. $icons[checktype($name)] . '</span>
+          <a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">' . ' ' . $name . '</a>
+          <span class="info">' . $_SESSION['createdAt'] . '</span>
+          <span class="info">' . convertSize($_SESSION['size']) . '</span>
+          <span class="info">' . $_SESSION['lastEdit'] . '</span>
+          <span class="show-actions">&#10247;
+            <ul class="action-options hidden">
+              <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
+              <!-- <li class="action-option">Edit</li>
+              <li class="action-option">Rename</li> -->
+              <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
+            </ul>
+          </span>
         </li>';
       }
       ?>

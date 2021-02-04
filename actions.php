@@ -9,6 +9,12 @@ if (isset($_POST['type'])) {
         case 'dir':
             if (!(file_exists($path) && is_dir($path))) {
                 mkdir($path);
+                $createdAt = date_create("now")->format("d-m-y");
+                $fileSize = filesize($path);
+                // $lastEdit = date("d-m H:i:s", filemtime($path));
+                $_SESSION['createdAt'] = $createdAt;
+                $_SESSION['size'] = $fileSize;
+                // $_SESSION['lastEdit'] = $lastEdit;
                 $_SESSION['message'] = 'Successfully created new directory!';
             } else {
                 $_SESSION['message'] = 'Directory already exists!';
