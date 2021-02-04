@@ -55,9 +55,14 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
   <main>
     <?php
     if (isset($_SESSION['message'])) {
-      echo '<p class="message">' . $_SESSION['message'] . '</p>';
+      echo '<p class="message">' . nl2br($_SESSION['message']) . '</p>';
     }
+    if(isset($_SESSION['fileContent'])) {
+      echo '<section class="file-content"><p>' . $_SESSION['fileContent'] . '</p></section>';
+    }
+
     ?>
+
     <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
     <ul>
       <?php
@@ -83,3 +88,4 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
 <?php
 
 unset($_SESSION['message']);
+unset($_SESSION['fileContent']);

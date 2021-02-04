@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_POST['type']) {
+if (isset($_POST['type'])) {
     $type = $_POST['type'];
     $path = $_SESSION['currentPath'] . '/' . $_POST['title'];
     switch ($type) {
@@ -47,6 +47,18 @@ if (isset($_GET['action'])) {
                 $path = $_SESSION['currentPath'] . '/' . $name;
                 if (file_exists($path) && is_dir($path)) {
                     $_SESSION['currentPath'] = $path;
+                }
+                if(file_exists($path) && is_file($path)) {
+                    if(substr($name,-4) == '.txt') {
+                        $file = fopen($path, 'r');
+                        $size = filesize($path);
+                        $content = fread($file, $size);
+                        $_SESSION['fileContent'] = $content;
+                        fclose($file);
+                    }
+                    if(substr($name,-5) == '.docx') {
+                        
+                    }
                 }
             }
             break;
