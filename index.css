@@ -111,16 +111,16 @@ main {
 }
 
 .file-content {
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 12%;
+  left: 30%;
   background-color: #eee;
   width: 40%;
-  height:max-content;
-  min-height: 30%;
+  min-height: 20%;
+  max-height: 70%;
   padding: 10px;
   border-radius: 10px;
+  overflow-y: scroll;
 }
 
 .hidden {
