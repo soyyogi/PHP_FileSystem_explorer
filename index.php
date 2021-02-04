@@ -17,18 +17,27 @@ function checktype($name)
   if (file_exists($path) && is_dir($path)) {
     return 'dir';
   }
-  if (file_exists($path) && is_file($path) && (substr($name, -4) == '.txt')) {
-    return 'txt';
+  if (file_exists($path) && is_file($path)) {
+    if (substr($name, -4) == '.txt') {
+      return 'txt';
+    } elseif (substr($name, -5) == '.docx') {
+      return 'docx';
+    } elseif (substr($name, -5) == '.jpeg' || substr($name, -4) == '.jpg' || substr($name, -4) == '.png') {
+      return 'img';
+    } elseif (substr($name, -4) == '.mp3') {
+      return 'mp3';
+    }
   }
-  if (file_exists($path) && is_file($path) && (substr($name, -5) == '.docx')) {
-    return 'docx';
-  }
+  return 'unknown';
 }
 
 $icons = [
   'dir' => '<i class="far fa-folder"></i>',
   'txt' => '<i class="far fa-file-alt"></i>',
-  'docx' => '<i class="far fa-file-word"></i>'
+  'docx' => '<i class="far fa-file-word"></i>',
+  'img' => '<i class="far fa-image"></i>',
+  'mp3' => '<i class="far fa-file-audio"></i>',
+  'unknown' => '<i class="far fa-file"></i>'
 ];
 
 
@@ -53,7 +62,7 @@ $icons = [
       <a href="/" class="logo">Logo</a>
       <input type="search" class="input-search" placeholder="search">
       <ul class="header-list">
-        <li><a href="#" class="header-link">Upload</a></li>
+        <li class="upload-file header-link">Upload</li>
         <li class="create-new-item header-link">
           New Item
           <ul class="item-options hidden">
@@ -68,9 +77,10 @@ $icons = [
 
   <form class="create-item-form hidden" action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
     <input type="text" name="type" id="type" hidden>
+    <input type="file" name="fileToUpload" id="fileToUpload" hidden>
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
     <textarea name="body" id="body" cols="30" rows="10" hidden placeholder="some text here..."></textarea>
-    <button type="submit">Create</button>
+    <button type="submit">Submit</button>
   </form>
 
   <main>
