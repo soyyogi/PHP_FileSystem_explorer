@@ -69,7 +69,7 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
             <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Open</a></li>
             <!-- <li class="action-option">Edit</li>
             <li class="action-option">Rename</li> -->
-            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Delete</a></li>
+            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=delete">Delete</a></li>
           </ul>
         </span>
         </li>';
