@@ -22,6 +22,7 @@ document.querySelectorAll('.item-option').forEach(item => item.addEventListener(
 function uploadItem(e) {
     e.stopPropagation();
     document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('.create-item-form #type').value = 'upload';
     document.querySelector('.create-item-form').setAttribute('enctype', 'multipart/form-data');
     document.querySelector('.create-item-form #title').setAttribute('hidden', true);
     document.querySelector('.create-item-form #fileToUpload').removeAttribute('hidden');
