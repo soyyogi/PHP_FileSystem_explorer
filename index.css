@@ -3,6 +3,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #222;
+}
+
+a:visited {
+  color: #222;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -32,4 +46,83 @@
   outline: none;
   width: 200px;
   height: 25px;
+}
+
+.create-new-item {
+  position: relative;
+}
+
+.item-options {
+  position: absolute;
+  top: 40px;
+  left: -10px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  background: #eee;
+  border-radius: 5px;
+  cursor: initial;
+}
+
+.item-options li,
+.action-options li {
+  list-style: none;
+  width: max-content;
+  margin: 5px;
+}
+
+.create-item-form {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.currentTree-item {
+  margin: 12px 0;
+  list-style: none;
+}
+
+.show-actions {
+  position: relative;
+  vertical-align: sub;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.action-options {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  background: #eee;
+  border-radius: 5px;
+}
+
+.file-content {
+  position: absolute;
+  top: 12%;
+  left: 30%;
+  background-color: #eee;
+  width: 40%;
+  min-height: 20%;
+  max-height: 70%;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+
+.hidden {
+  display: none;
 }
