@@ -21,6 +21,7 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+  <script defer src="./script.js"></script>
   <link rel="stylesheet" href="./index.css">
   <title>File Sistem</title>
 </head>
@@ -32,9 +33,9 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
       <input type="search" class="input-search" placeholder="search">
       <ul class="header-list">
         <li><a href="#" class="header-link">Upload</a></li>
-        <li class="create-new-item">
-          <a href="#" class="header-link">New Item</a>
-          <ul class="item-options">
+        <li class="create-new-item header-link">
+          New Item
+          <ul class="item-options hidden">
             <li>Text File</li>
             <li>MS Word File</li>
             <li>Folder</li>
