@@ -48,16 +48,20 @@ if (isset($_GET['action'])) {
                 if (file_exists($path) && is_dir($path)) {
                     $_SESSION['currentPath'] = $path;
                 }
-                if(file_exists($path) && is_file($path)) {
-                    if(substr($name,-4) == '.txt') {
+                if (file_exists($path) && is_file($path)) {
+                    if (substr($name, -4) == '.txt') {
+                        // $path = 'http://localhost/PHP_FileSystem_explorer/' . $path;
+                        // header("Location: $path");
+                        // die();
                         $file = fopen($path, 'r');
                         $size = filesize($path);
                         $content = fread($file, $size);
                         $_SESSION['fileContent'] = $content;
                         fclose($file);
-                    }
-                    if(substr($name,-5) == '.docx') {
-                        
+                    } else {
+                        $path = 'http://localhost/PHP_FileSystem_explorer/' . $path;
+                        header("Location: $path");
+                        die();
                     }
                 }
             }
@@ -74,14 +78,15 @@ if (isset($_GET['action'])) {
             if (isset($name)) {
                 $path = $_SESSION['currentPath'] . '/' . $name;
                 if (file_exists($path)) {
-                    function delRecurse($path) {
-                        if(is_dir($path)){
+                    function delRecurse($path)
+                    {
+                        if (is_dir($path)) {
                             $list = glob($path . '/*');
-                            foreach($list as $item) {
+                            foreach ($list as $item) {
                                 is_dir($item) ? delRecurse($item) : unlink($item);
                             }
                             rmdir($path);
-                        } elseif(is_file($path)){
+                        } elseif (is_file($path)) {
                             unlink($path);
                         }
                     }
