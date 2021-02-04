@@ -54,18 +54,26 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
 
   <main>
     <?php
-      if(isset($_SESSION['message'])) {
-        echo '<p class="message">' . $_SESSION['message'] . '</p>';
-      }
+    if (isset($_SESSION['message'])) {
+      echo '<p class="message">' . $_SESSION['message'] . '</p>';
+    }
     ?>
     <h2>This will be the main body part</h2>
     <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
     <ul>
       <?php
       foreach ($currentTree as $i => $name) {
-        echo '<li><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">' . $name . '</a></li>';
+        echo '<li class="currentTree-item"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">' . $name . '</a>
+        <span class="show-actions">&#10247;
+          <ul class="action-options hidden">
+            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Open</a></li>
+            <!-- <li class="action-option">Edit</li>
+            <li class="action-option">Rename</li> -->
+            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Delete</a></li>
+          </ul>
+        </span>
+        </li>';
       }
-
       ?>
     </ul>
   </main>

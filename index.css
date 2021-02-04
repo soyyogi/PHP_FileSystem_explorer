@@ -55,7 +55,8 @@ body {
   cursor: initial;
 }
 
-.item-options li {
+.item-options li,
+.action-options li {
   list-style: none;
   width: max-content;
   margin: 5px;
@@ -68,6 +69,27 @@ body {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.currentTree-item {
+  margin: 10px;
+}
+
+.show-actions {
+  position: relative;
+  vertical-align: sub;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.action-options {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #ccc;
 }
 
 .hidden {

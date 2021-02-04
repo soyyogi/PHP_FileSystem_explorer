@@ -18,6 +18,16 @@ function createItem() {
 document.querySelectorAll('.item-option').forEach(item => item.addEventListener('click', createItem));
 
 
+
+// show action options
+function showActions(e) {
+    e.stopPropagation();
+    this.querySelector('.action-options').classList.toggle('hidden');
+}
+document.querySelectorAll('.show-actions').forEach(item => item.addEventListener('click', showActions));
+
+
+
 // hide new item dropdown and form on outside click
 document.querySelector('.create-item-form').addEventListener('click', e => e.stopPropagation());
 function hideElement(e) {
@@ -30,5 +40,10 @@ function hideElement(e) {
     if(!document.querySelector('.item-options').classList.contains('hidden')) {
         document.querySelector('.item-options').classList.toggle('hidden');
     }
+    document.querySelectorAll('.action-options').forEach(item => {
+        if(!item.classList.contains('hidden')) {
+            item.classList.toggle('hidden');
+        }
+    })
 }
 document.body.addEventListener('click', hideElement);
