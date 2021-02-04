@@ -33,3 +33,29 @@
   width: 200px;
   height: 25px;
 }
+
+.create-new-item {
+  position: relative;
+}
+
+.item-options {
+  position: absolute;
+  top: 40px;
+  left: -10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #ccc;
+  border-radius: 25px;
+  cursor: initial;
+}
+
+.item-options li {
+  list-style: none;
+  width: max-content;
+  margin: 5px;
+}
+
+.hidden {
+  display: none;
+}
