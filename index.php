@@ -53,7 +53,7 @@ $icons = [
       <a href="/" class="logo">Logo</a>
       <input type="search" class="input-search" placeholder="search">
       <ul class="header-list">
-        <li><a href="#" class="header-link">Upload</a></li>
+        <li class="upload-file header-link">Upload</li>
         <li class="create-new-item header-link">
           New Item
           <ul class="item-options hidden">
@@ -68,9 +68,10 @@ $icons = [
 
   <form class="create-item-form hidden" action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
     <input type="text" name="type" id="type" hidden>
+    <input type="file" name="fileToUpload" id="fileToUpload" hidden>
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
     <textarea name="body" id="body" cols="30" rows="10" hidden placeholder="some text here..."></textarea>
-    <button type="submit">Create</button>
+    <button type="submit">Submit</button>
   </form>
 
   <main>
