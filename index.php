@@ -58,7 +58,6 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
       echo '<p class="message">' . $_SESSION['message'] . '</p>';
     }
     ?>
-    <h2>This will be the main body part</h2>
     <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
     <ul>
       <?php
