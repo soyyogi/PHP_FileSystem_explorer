@@ -11,6 +11,26 @@ if (!isset($_SESSION['currentPath'])) {
 $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
 // print_r($currentTree);
 
+function checktype($name)
+{
+  $path = $_SESSION['currentPath'] . '/' . $name;
+  if (file_exists($path) && is_dir($path)) {
+    return 'dir';
+  }
+  if (file_exists($path) && is_file($path) && (substr($name, -4) == '.txt')) {
+    return 'txt';
+  }
+  if (file_exists($path) && is_file($path) && (substr($name, -5) == '.docx')) {
+    return 'docx';
+  }
+}
+
+$icons = [
+  'dir' => '<i class="far fa-folder"></i>',
+  'txt' => '<i class="far fa-file-alt"></i>',
+  'docx' => '<i class="far fa-file-word"></i>'
+];
+
 
 ?>
 
@@ -22,6 +42,7 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
   <script defer src="./script.js"></script>
+  <script src="https://kit.fontawesome.com/1935655a46.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css">
   <title>File Sistem</title>
 </head>
@@ -57,7 +78,7 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
     if (isset($_SESSION['message'])) {
       echo '<p class="message">' . nl2br($_SESSION['message']) . '</p>';
     }
-    if(isset($_SESSION['fileContent'])) {
+    if (isset($_SESSION['fileContent'])) {
       echo '<section class="file-content"><p>' . $_SESSION['fileContent'] . '</p></section>';
     }
 
@@ -67,7 +88,8 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
     <ul>
       <?php
       foreach ($currentTree as $i => $name) {
-        echo '<li class="currentTree-item"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">' . $name . '</a>
+
+        echo '<li class="currentTree-item"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">' . $icons[checktype($name)] . ' ' . $name . '</a>
         <span class="show-actions">&#10247;
           <ul class="action-options hidden">
             <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Open</a></li>
