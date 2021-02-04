@@ -1,5 +1,8 @@
 <?php
 session_start();
+if($_POST['type']) {
+    print_r($_POST);
+}
 $action = $_GET['action'];
 if (isset($action)) {
     switch ($action) {

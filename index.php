@@ -36,14 +36,22 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
         <li class="create-new-item header-link">
           New Item
           <ul class="item-options hidden">
-            <li>Text File</li>
-            <li>MS Word File</li>
-            <li>Folder</li>
+            <li class="item-option txt">Text File</li>
+            <li class="item-option docx">MS Word File</li>
+            <li class="item-option dir">Folder</li>
           </ul>
         </li>
       </ul>
     </div>
   </header>
+
+  <form action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
+    <input type="text" name="type" id="type" hidden>
+    <input type="text" name="title" id="title" placeholder="title" maxlength="20">
+    <textarea name="body" id="body" cols="30" rows="10" hidden>some text here...</textarea>
+    <button type="submit">Create</button>
+  </form>
+
   <main>
     <h2>This will be the main body part</h2>
     <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
