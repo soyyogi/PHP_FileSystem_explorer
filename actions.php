@@ -1,10 +1,26 @@
 <?php
 session_start();
+
 if($_POST['type']) {
-    print_r($_POST);
+    $type = $_POST['type'];
+    switch ($type) {
+        case 'dir':
+            mkdir($_SESSION['currentPath'] . '/' . $_POST['title']);
+            header('Location: http://localhost/PHP_FileSystem_explorer');
+            break;
+        case 'txt':
+            
+            break;
+        case 'docx':
+
+            break;
+        default:
+            echo 'unsupported type';
+    }
 }
-$action = $_GET['action'];
-if (isset($action)) {
+
+if(isset($_GET['action'])){
+    $action = $_GET['action'];
     switch ($action) {
         case 'open':
             $name = $_GET['name'];
