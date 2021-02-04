@@ -29,6 +29,7 @@ document.querySelectorAll('.show-actions').forEach(item => item.addEventListener
 
 
 // hide new item dropdown and form on outside click
+document.querySelector('.file-content').addEventListener('click', e => e.stopPropagation());
 document.querySelector('.create-item-form').addEventListener('click', e => e.stopPropagation());
 function hideElement(e) {
     if(!document.querySelector('.create-item-form').classList.contains('hidden')) {
@@ -45,5 +46,8 @@ function hideElement(e) {
             item.classList.toggle('hidden');
         }
     })
+    if(!document.querySelector('.file-content').classList.contains('hidden')) {
+        document.querySelector('.file-content').classList.add('hidden');
+    }
 }
 document.body.addEventListener('click', hideElement);

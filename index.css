@@ -110,6 +110,19 @@ main {
   border-radius: 5px;
 }
 
+.file-content {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee;
+  width: 40%;
+  height:max-content;
+  min-height: 30%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .hidden {
   display: none;
 }
