@@ -1,5 +1,7 @@
 <?php
 session_start();
+$user = 'yogi';
+$_SESSION['basePath'] = $user === 'yogi' ? 'http://localhost/PHP_FileSystem_explorer' : 'http://192.168.64.2/PHP_FileSystem_explorer';
 // unset($_SESSION['currentPath']);
 $root = 'root';
 if (!(file_exists($root) && is_dir($root))) {
@@ -26,7 +28,9 @@ function checktype($name)
       return 'img';
     } elseif (substr($name, -4) == '.mp3') {
       return 'mp3';
-    }
+    } elseif (substr($name, -4) == '.pdf') {
+      return 'pdf';
+    } 
   }
   return 'unknown';
 }
@@ -37,7 +41,8 @@ $icons = [
   'docx' => '<i class="far fa-file-word"></i>',
   'img' => '<i class="far fa-image"></i>',
   'mp3' => '<i class="far fa-file-audio"></i>',
-  'unknown' => '<i class="far fa-file"></i>'
+  'unknown' => '<i class="far fa-file"></i>',
+  'pdf' => '<i class="far fa-file-pdf"></i>'
 ];
 
 
@@ -75,7 +80,7 @@ $icons = [
     </div>
   </header>
 
-  <form class="create-item-form hidden" action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
+  <form class="create-item-form hidden" action="<?=$_SESSION['basePath'] . '/actions.php'?>" method="post">
     <input type="text" name="type" id="type" hidden>
     <input type="file" name="fileToUpload" id="fileToUpload" hidden>
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
@@ -94,18 +99,18 @@ $icons = [
 
     ?>
 
-    <h3><a href="http://localhost/PHP_FileSystem_explorer/actions.php?action=previousDir">&#8617;</a></h3>
+    <h3><a href="<?=$_SESSION['basePath'] . '/actions.php?action=previousDir'?>">&#8617;</a></h3>
     <ul>
       <?php
       foreach ($currentTree as $i => $name) {
 
-        echo '<li class="currentTree-item"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">' . $icons[checktype($name)] . ' ' . $name . '</a>
+        echo '<li class="currentTree-item"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">' . $icons[checktype($name)] . ' ' . $name . '</a>
         <span class="show-actions">&#10247;
           <ul class="action-options hidden">
-            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=open">Open</a></li>
+            <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
             <!-- <li class="action-option">Edit</li>
             <li class="action-option">Rename</li> -->
-            <li class="action-option"><a href="http://localhost/PHP_FileSystem_explorer/actions.php?name=' . $name . '&action=delete">Delete</a></li>
+            <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
           </ul>
         </span>
         </li>';
