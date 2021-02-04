@@ -45,7 +45,7 @@ $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
     </div>
   </header>
 
-  <form id="create-item-form" action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
+  <form class="create-item-form hidden" action="http://localhost/PHP_FileSystem_explorer/actions.php" method="post">
     <input type="text" name="type" id="type" hidden>
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
     <textarea name="body" id="body" cols="30" rows="10" hidden placeholder="some text here..."></textarea>

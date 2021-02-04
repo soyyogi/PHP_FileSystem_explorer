@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  height: 100vh;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -56,8 +61,8 @@
   margin: 5px;
 }
 
-#create-item-form {
-  display: none;
+.create-item-form {
+  display: flex;
   flex-direction: column;
   position: fixed;
   top: 30%;
