@@ -18,7 +18,11 @@ if($_POST['type']) {
             }
             break;
         case 'docx':
-
+            if(!(file_exists($path . '.docx') && is_file($path . '.docx'))) {
+                $file = fopen($path . '.docx', 'a+');
+                fwrite($file, $_POST['body']);
+                fclose($file);
+            }
             break;
         default:
             echo 'unsupported type';
