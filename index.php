@@ -1,5 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION['createdAt'])) {
+  $_SESSION['createdAt'] = [];
+}
+if (!isset($_SESSION['size'])) {
+  $_SESSION['size'] = [];
+}
+// unset($_SESSION['createdAt']);
+// unset($_SESSION['size']);
 $user = 'fabri';
 $_SESSION['basePath'] = $user === 'yogi' ? 'http://localhost/PHP_FileSystem_explorer' : 'http://192.168.64.2/PHP_FileSystem_explorer';
 // unset($_SESSION['currentPath']);
@@ -11,8 +19,10 @@ if (!isset($_SESSION['currentPath'])) {
   $_SESSION['currentPath'] = $root;
 }
 $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
-// print_r($currentTree);
 
+// print_r($currentTree);
+// print_r($_SESSION["createdAt"]);
+// print_r($_SESSION["size"]);
 function checktype($name)
 {
   $path = $_SESSION['currentPath'] . '/' . $name;
@@ -57,11 +67,13 @@ $icons = [
   'mp4' => '<i class="far fa-file-video"></i>'
 ];
 
-function convertSize($bytes, $precision=2) {
-  if ($bytes >= 1048576) {
-    return $bytes = number_format($bytes / 1048576, 2) . ' MB';
+function convertSize($bytes) {
+  if ($bytes >= 1000000) {
+    return $bytes = number_format($bytes / 1000000, 2) . ' MB';
+  } elseif ($bytes >= 1000) {
+    return $bytes = number_format($bytes / 1000, 2) . ' KB';
   } else {
-    return $bytes = number_format($bytes / 1024, 2) . ' KB';
+    return $bytes;
   }
 }
 
@@ -138,14 +150,14 @@ function convertSize($bytes, $precision=2) {
         echo '<li class="currentTree-item">
           <span>'. $icons[checktype($name)] . '</span>
           <a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">' . ' ' . $name . '</a>
-          <span class="info">' . $_SESSION['createdAt'] . '</span>
-          <span class="info">' . convertSize($_SESSION['size']) . '</span>
+          <span class="info">' . $_SESSION['createdAt'][$name] . '</span>
+          <span class="info">' . convertSize($_SESSION['size'][$name]) . '</span>
           <span class="info">' . $_SESSION['lastEdit'] . '</span>
           <span class="show-actions">&#10247;
             <ul class="action-options hidden">
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
-              <!-- <li class="action-option">Edit</li>
-              <li class="action-option">Rename</li> -->
+              <li class="action-option">Edit</li>
+              <li class="action-option">Rename</li>
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
             </ul>
           </span>
