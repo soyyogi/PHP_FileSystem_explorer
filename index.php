@@ -73,6 +73,11 @@ function convertSize($bytes, $precision=2) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    const currentTree = <?php echo json_encode($currentTree);?>;
+    const basePath = <?php echo json_encode($_SESSION['basePath']);?>;
+    const icons = <?php echo json_encode($icons);?>;
+  </script>
   <script defer src="./script.js"></script>
   <script src="https://kit.fontawesome.com/1935655a46.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css">
@@ -126,7 +131,7 @@ function convertSize($bytes, $precision=2) {
     <h3>
       <a href="<?=$_SESSION['basePath'] . '/actions.php?action=previousDir'?>" class="back-arrow">&#8617;</a>
     </h3>
-    <ul>
+    <ul id="displayList">
       <?php
       foreach ($currentTree as $i => $name) {
 
