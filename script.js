@@ -17,6 +17,17 @@ function createItem() {
 }
 document.querySelectorAll('.item-option').forEach(item => item.addEventListener('click', createItem));
 
+// rename item
+function renameItem(e) {
+    document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('#newtitle').removeAttribute('hidden');
+    document.querySelector('#newtitle').value = e.target.getAttribute('data-name');
+    document.querySelector('#title').value = e.target.getAttribute('data-name');
+    document.querySelector('#title').setAttribute('hidden', true);
+    document.querySelector('#type').value = 'rename';
+}
+document.querySelectorAll('[data-action-rename]').forEach(item => item.addEventListener('click', renameItem));
+
 
 // show upload file form
 function uploadItem(e) {
