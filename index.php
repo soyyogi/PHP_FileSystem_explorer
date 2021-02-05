@@ -20,11 +20,7 @@ if (!isset($_SESSION['currentPath'])) {
 }
 $currentTree = array_slice(scandir($_SESSION['currentPath']), 2);
 
-// print_r($currentTree);
-// print_r($_SESSION["createdAt"]);
-// print_r($_SESSION["size"]);
-function checktype($name)
-{
+function checktype($name) {
   $path = $_SESSION['currentPath'] . '/' . $name;
   if (file_exists($path) && is_dir($path)) {
     return 'dir';
@@ -73,7 +69,7 @@ function convertSize($bytes) {
   } elseif ($bytes >= 1000) {
     return $bytes = number_format($bytes / 1000, 2) . ' KB';
   } else {
-    return $bytes;
+    return $bytes . ' Bytes';
   }
 }
 
@@ -125,6 +121,7 @@ function convertSize($bytes) {
     <input type="text" name="type" id="type" hidden>
     <input type="file" name="fileToUpload" id="fileToUpload" hidden>
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
+    <input type="text" name="newtitle" id="newtitle" placeholder="new title" maxlength="20" hidden>
     <textarea name="body" id="body" cols="30" rows="10" hidden placeholder="some text here..."></textarea>
     <button type="submit">Submit</button>
   </form>
@@ -156,8 +153,10 @@ function convertSize($bytes) {
           <span class="show-actions">&#10247;
             <ul class="action-options hidden">
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
-              <li class="action-option">Edit</li>
-              <li class="action-option">Rename</li>
+              <li class="action-option" data-action-rename data-name="'.$name.'">Rename</li>
+              <li class="action-option" data-name="'.$name.'">Edit</li>
+              <li class="action-option">Copy</li>
+              <li class="action-option">Move</li>
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
             </ul>
           </span>

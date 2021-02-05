@@ -101,6 +101,72 @@ if (isset($_POST['type'])) {
                 }
             }
             break;
+
+        case "rename":
+            echo $path . PHP_EOL;
+            echo $_POST['title'] . PHP_EOL;
+            echo $_POST['newtitle'];
+            $newPath = $_SESSION['currentPath'] . '/' . $_POST['newtitle'];
+            copy($path, $newPath);
+
+            // Adding new time stamp and size
+            $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [$_POST['newtitle'] => $_SESSION["createdAt"][$_POST['title']]]);
+            $_SESSION['size'] = array_merge($_SESSION['size'], [$_POST['newtitle'] => $_SESSION["size"][$_POST['title']]]);
+
+            // Deleting old the time stamp and size
+            $_SESSION["createdAt"] = array_diff_assoc($_SESSION["createdAt"], [$name => $_SESSION["createdAt"][$_POST['title']]]);
+            $_SESSION["size"] = array_diff_assoc($_SESSION["size"], [$name => $_SESSION["size"][$_POST['title']]]);
+
+
+
+            // DELETE
+            $name = $_POST['title'];
+            if (isset($name)) {
+                $path = $_SESSION['currentPath'] . '/' . $name;
+                if (file_exists($path)) {
+                    function delFile($item) {
+                        $name = substr($item, strrpos($item, "/") +1);
+                        $_SESSION["createdAt"] = array_diff_assoc($_SESSION["createdAt"], [$name => $_SESSION["createdAt"][$name]]);
+                        $_SESSION["size"] = array_diff_assoc($_SESSION["size"], [$name => $_SESSION["size"][$name]]);
+                        unlink($item);
+                    }
+                    function delDir($item) {
+                        $name = substr($item, strrpos($item, "/") +1);
+                        $_SESSION["createdAt"] = array_diff_assoc($_SESSION["createdAt"], [$name => $_SESSION["createdAt"][$name]]);
+                        $_SESSION["size"] = array_diff_assoc($_SESSION["size"], [$name => $_SESSION["size"][$name]]);
+                        rmdir($item);
+                    }
+                    function delRecurse($path)
+                    {
+                        if (is_dir($path)) {
+                            $list = glob($path . '/*');
+                            foreach ($list as $item) {
+                                is_dir($item) ? delRecurse($item) : delFile($item);
+                            }
+                            delDir($path);
+                        } elseif (is_file($path)) {
+                            delFile($path);
+                        }
+                    }
+                    delRecurse($path);
+                    $_SESSION['message'] = 'Successfully deleted!';
+                }
+            }
+            // ! Copy the file with different name and delete the old one
+            break;
+
+        case "move":
+            // ! Copy file to different folder and delete the old one
+            break;
+
+        case "copy":
+            // ! Just copy the file in different folder or if in same folder copy with different name (name + copy)
+            break;
+
+        case "edit":
+            // todo replace the date Session[modifiedAt][$name] = new date;
+            break;
+
         default:
             $_SESSION['message'] = 'Unsupported file type!';
     }
@@ -174,19 +240,6 @@ if (isset($_GET['action'])) {
                     $_SESSION['message'] = 'Successfully deleted!';
                 }
             }
-            break;
-
-        case "edit":
-            // todo replace the date Session[modifiedAt][$name] = new date;
-            break;
-
-        case "remove":
-            break;
-
-        case "move":
-            break;
-
-        case "copy":
             break;
 
         default:
