@@ -70,3 +70,43 @@ function hideElement(e) {
     }
 }
 document.body.addEventListener('click', hideElement);
+
+
+
+// search result
+function checktype($name) {
+    if ($name.endsWith('.txt')) {
+        return 'txt';
+    } else if ($name.endsWith('.txt')) {
+        return 'docx';
+    } else if ($name.endsWith('.jpeg') || $name.endsWith('.jpg') || $name.endsWith('.png')) {
+        return 'img';
+    } else if ($name.endsWith('.mp3')) {
+        return 'mp3';
+    } else if ($name.endsWith('.pdf')) {
+        return 'pdf';
+    } 
+    return 'dir';
+}
+const displayList = document.querySelector('#displayList');
+const search = document.querySelector('.input-search');
+function findResult(e) {
+    const filterResult = currentTree.filter(el => el.includes(e.target.value));
+    displayList.innerHTML = '';
+    filterResult.forEach(el => {
+        displayList.innerHTML += `
+        <li class="currentTree-item"><a href="${basePath}/actions.php?name=${el}&action=open">${icons[checktype(el)]} ${el}</a>
+        <span class="show-actions">&#10247;
+          <ul class="action-options hidden">
+            <li class="action-option"><a href="${basePath}/actions.php?name=${el}&action=open">Open</a></li>
+            <!-- <li class="action-option">Edit</li>
+            <li class="action-option">Rename</li> -->
+            <li class="action-option"><a href="${basePath}/actions.php?name=${el}&action=delete">Delete</a></li>
+          </ul>
+        </span>
+        </li>
+        `
+    })
+    document.querySelectorAll('.show-actions').forEach(item => item.addEventListener('click', showActions));
+}
+search.addEventListener('input', findResult);

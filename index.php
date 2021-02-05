@@ -55,6 +55,11 @@ $icons = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+  <script>
+    const currentTree = <?php echo json_encode($currentTree);?>;
+    const basePath = <?php echo json_encode($_SESSION['basePath']);?>;
+    const icons = <?php echo json_encode($icons);?>;
+  </script>
   <script defer src="./script.js"></script>
   <script src="https://kit.fontawesome.com/1935655a46.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css">
@@ -100,7 +105,7 @@ $icons = [
     ?>
 
     <h3><a href="<?=$_SESSION['basePath'] . '/actions.php?action=previousDir'?>">&#8617;</a></h3>
-    <ul>
+    <ul id="displayList">
       <?php
       foreach ($currentTree as $i => $name) {
 
