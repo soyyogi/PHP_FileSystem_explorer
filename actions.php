@@ -9,12 +9,10 @@ if (isset($_POST['type'])) {
         case 'dir':
             if (!(file_exists($path) && is_dir($path))) {
                 mkdir($path);
-                $createdAt = date_create("now")->format("d-m-y");
+                $createdAt = date_create("now")->format("d-m-y H:i:s");
                 $fileSize = filesize($path);
-                // $lastEdit = date("d-m H:i:s", filemtime($path));
-                $_SESSION['createdAt'] = $createdAt;
-                $_SESSION['size'] = $fileSize;
-                // $_SESSION['lastEdit'] = $lastEdit;
+                $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [$_POST['title']=>$createdAt]);
+                $_SESSION['size'] = array_merge($_SESSION['size'], [$_POST['title']=>$filize]);
                 $_SESSION['message'] = 'Successfully created new directory!';
             } else {
                 $_SESSION['message'] = 'Directory already exists!';
@@ -25,6 +23,10 @@ if (isset($_POST['type'])) {
                 $file = fopen($path . '.txt', 'a+');
                 fwrite($file, $_POST['body']);
                 fclose($file);
+                $createdAt = date_create("now")->format("d-m-y H:i:s");
+                $fileSize = filesize($path . '.txt');
+                $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [($_POST['title'].'.txt')=>$createdAt]);
+                $_SESSION['size'] = array_merge($_SESSION['size'], [($_POST['title'].'.txt')=>$fileSize]);
                 $_SESSION['message'] = 'Successfully created new text file!';
             } else {
                 $_SESSION['message'] = 'File already exists!';
@@ -35,6 +37,10 @@ if (isset($_POST['type'])) {
                 $file = fopen($path . '.docx', 'a+');
                 fwrite($file, $_POST['body']);
                 fclose($file);
+                $createdAt = date_create("now")->format("d-m-y H:i:s");
+                $fileSize = filesize($path . '.docx');
+                $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [($_POST['title'].'.docx')=>$createdAt]);
+                $_SESSION['size'] = array_merge($_SESSION['size'], [($_POST['title'].'.docx')=>$fileSize]);
                 $_SESSION['message'] = 'Successfully created new MS word file!';
             } else {
                 $_SESSION['message'] = 'File already exists!';
@@ -84,6 +90,11 @@ if (isset($_POST['type'])) {
                 // if everything is ok, try to upload file
             } else {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    $createdAt = date_create("now")->format("d-m-y H:i:s");
+                    $fileSize = $_FILES["fileToUpload"]["size"];
+                    // print_r($fileSize);
+                    $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [($_FILES["fileToUpload"]["name"])=>$createdAt]);
+                    $_SESSION['size'] = array_merge($_SESSION['size'], [($_FILES["fileToUpload"]["name"])=>$fileSize]);
                     $_SESSION['message'] =  "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
                 } else {
                     $_SESSION['message'] = "Sorry, there was an error uploading your file.";
@@ -135,16 +146,28 @@ if (isset($_GET['action'])) {
             if (isset($name)) {
                 $path = $_SESSION['currentPath'] . '/' . $name;
                 if (file_exists($path)) {
+                    function delFile($item) {
+                        $name = substr($item, strrpos($item, "/") +1);
+                        $_SESSION["createdAt"] = array_diff_assoc($_SESSION["createdAt"], [$name => $_SESSION["createdAt"][$name]]);
+                        $_SESSION["size"] = array_diff_assoc($_SESSION["size"], [$name => $_SESSION["size"][$name]]);
+                        unlink($item);
+                    }
+                    function delDir($item) {
+                        $name = substr($item, strrpos($item, "/") +1);
+                        $_SESSION["createdAt"] = array_diff_assoc($_SESSION["createdAt"], [$name => $_SESSION["createdAt"][$name]]);
+                        $_SESSION["size"] = array_diff_assoc($_SESSION["size"], [$name => $_SESSION["size"][$name]]);
+                        rmdir($item);
+                    }
                     function delRecurse($path)
                     {
                         if (is_dir($path)) {
                             $list = glob($path . '/*');
                             foreach ($list as $item) {
-                                is_dir($item) ? delRecurse($item) : unlink($item);
+                                is_dir($item) ? delRecurse($item) : delFile($item);
                             }
-                            rmdir($path);
+                            delDir($path);
                         } elseif (is_file($path)) {
-                            unlink($path);
+                            delFile($path);
                         }
                     }
                     delRecurse($path);
@@ -152,6 +175,20 @@ if (isset($_GET['action'])) {
                 }
             }
             break;
+
+        case "edit":
+            // todo replace the date Session[modifiedAt][$name] = new date;
+            break;
+
+        case "remove":
+            break;
+
+        case "move":
+            break;
+
+        case "copy":
+            break;
+
         default:
             $_SESSION['message'] = 'Unsupported action!';
     }

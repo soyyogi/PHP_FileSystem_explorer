@@ -42,12 +42,12 @@ i {
   background: var(--primary);
   color: #fff;
 }
-.logo {
+a.logo {
   text-decoration: none;
   font-size: 24px;
   color: #fff;
 }
-.logo:hover {
+a.logo:hover {
   color: #fff;
 }
 .header-list {
