@@ -8,9 +8,10 @@ if (!isset($_SESSION['size'])) {
 }
 // unset($_SESSION['createdAt']);
 // unset($_SESSION['size']);
-$user = 'fabri';
+
+$user = 'yogi';
 $_SESSION['basePath'] = $user === 'yogi' ? 'http://localhost/PHP_FileSystem_explorer' : 'http://192.168.64.2/PHP_FileSystem_explorer';
-// unset($_SESSION['currentPath']);
+
 $root = 'root';
 if (!(file_exists($root) && is_dir($root))) {
   mkdir($root);
@@ -24,28 +25,27 @@ function checktype($name) {
   $path = $_SESSION['currentPath'] . '/' . $name;
   if (file_exists($path) && is_dir($path)) {
     return 'dir';
-  }
-  if (file_exists($path) && is_file($path)) {
-    if (substr($name, -4) == '.txt') {
-      return 'txt';
-    } elseif (substr($name, -5) == '.docx') {
-      return 'docx';
-    } elseif (substr($name, -5) == '.jpeg' || substr($name, -4) == '.jpg' || substr($name, -4) == '.png' || substr($name, -4) == '.svg') {
-      return 'img';
-    } elseif (substr($name, -4) == '.mp3') {
-      return 'mp3';
-    } elseif (substr($name, -4) == '.pdf') {
-      return 'pdf';
-    } elseif (substr($name, -4) == '.mp4') {
-      return 'mp4';
-    } elseif (substr($name, -4) == '.ppt') {
-      return 'ppt';
-    } elseif (substr($name, -4) == '.csv') {
-      return 'csv';
-    } elseif (substr($name, -4) == '.zip' || substr($name, -4) == '.rar' || substr($name, -4) == '.exe') {
-      return 'zip';
+  } elseif (file_exists($path) && is_file($path)) {
+      if (substr($name, -4) == '.txt') {
+        return 'txt';
+      } elseif (substr($name, -5) == '.docx') {
+        return 'docx';
+      } elseif (substr($name, -5) == '.jpeg' || substr($name, -4) == '.jpg' || substr($name, -4) == '.png' || substr($name, -4) == '.svg') {
+        return 'img';
+      } elseif (substr($name, -4) == '.mp3') {
+        return 'mp3';
+      } elseif (substr($name, -4) == '.pdf') {
+        return 'pdf';
+      } elseif (substr($name, -4) == '.mp4') {
+        return 'mp4';
+      } elseif (substr($name, -4) == '.ppt') {
+        return 'ppt';
+      } elseif (substr($name, -4) == '.csv') {
+        return 'csv';
+      } elseif (substr($name, -4) == '.zip' || substr($name, -4) == '.rar' || substr($name, -4) == '.exe') {
+        return 'zip';
+      }
     }
-  }
   return 'unknown';
 }
 
@@ -149,7 +149,7 @@ function convertSize($bytes) {
           <a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">' . ' ' . $name . '</a>
           <span class="info">' . $_SESSION['createdAt'][$name] . '</span>
           <span class="info">' . convertSize($_SESSION['size'][$name]) . '</span>
-          <span class="info">' . $_SESSION['lastEdit'] . '</span>
+          <span class="info">' . (isset($_SESSION['lastEdit']) ? $_SESSION['lastEdit'] : "") . '</span>
           <span class="show-actions">&#10247;
             <ul class="action-options hidden">
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
