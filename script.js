@@ -2,6 +2,7 @@
 function newItem(e) {
     e.stopPropagation();
     document.querySelector('.item-options').classList.toggle('hidden');
+    document.querySelector('.move-doc').classList.add('hidden');
 }
 document.querySelector('.create-new-item').addEventListener('click', newItem);
 
@@ -9,6 +10,9 @@ document.querySelector('.create-new-item').addEventListener('click', newItem);
 // show create item form
 function createItem() {
     document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('.move-doc').classList.add('hidden');
+    document.querySelector('#title').removeAttribute('hidden');
+    document.querySelector('#newtitle').setAttribute('hidden', true);
     const type = this.classList[1];
     document.querySelector('.create-item-form #type').value = type;
     if(type !== 'dir') {
@@ -20,6 +24,7 @@ document.querySelectorAll('.item-option').forEach(item => item.addEventListener(
 // rename item
 function renameItem(e) {
     document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('.move-doc').classList.add('hidden');
     document.querySelector('#newtitle').removeAttribute('hidden');
     document.querySelector('#newtitle').value = e.target.getAttribute('data-name');
     document.querySelector('#title').value = e.target.getAttribute('data-name');
@@ -27,6 +32,26 @@ function renameItem(e) {
     document.querySelector('#type').value = 'rename';
 }
 document.querySelectorAll('[data-action-rename]').forEach(item => item.addEventListener('click', renameItem));
+
+// move item
+function moveItem(e) {
+    document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('.move-doc').classList.remove('hidden');
+    document.querySelector('#title').setAttribute('hidden', true);
+    document.querySelector('#title').value = e.target.getAttribute('data-name');
+    document.querySelector('#type').value = 'move';
+}
+document.querySelectorAll('[data-action-move]').forEach(item => item.addEventListener('click', moveItem));
+
+// copy item
+function copyItem(e) {
+    document.querySelector('.create-item-form').classList.remove('hidden');
+    document.querySelector('.move-doc').classList.remove('hidden');
+    document.querySelector('#title').setAttribute('hidden', true);
+    document.querySelector('#title').value = e.target.getAttribute('data-name');
+    document.querySelector('#type').value = 'copy';
+}
+document.querySelectorAll('[data-action-copy]').forEach(item => item.addEventListener('click', copyItem));
 
 
 // show upload file form
@@ -37,6 +62,7 @@ function uploadItem(e) {
     document.querySelector('.create-item-form').setAttribute('enctype', 'multipart/form-data');
     document.querySelector('.create-item-form #title').setAttribute('hidden', true);
     document.querySelector('.create-item-form #fileToUpload').removeAttribute('hidden');
+    document.querySelector('.move-doc').classList.add('hidden');
 }
 document.querySelector('.upload-file').addEventListener('click', uploadItem);
 
