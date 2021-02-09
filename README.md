@@ -1,25 +1,9 @@
-<!--
-*** To avoid retyping too much info. Do a search and replace for the following:
-*** github_username, repo_name, twitter_handle, email, project_title, project_description
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -64,75 +48,63 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
-
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
+This project create a system file explorer that allows the user to navigate, create directories and upload files in the same way as he would in his usual operating system. The file explorer is a tool that allows you to directly view and manipulate the files and directories associated with a path.
+The action that the user can do are:
+- Create, modify and delete directories
+- Browse through directories from an initial path
+- The initial path will start from a folder inside the project repository whose name will be "root".
+- Search directories and files by name
+- Navigate through the initial path established and all the folders created from that path.
+- Upload a file to a directory
+- See the information of files and directories like Creation date, Last Modified Date, Size.
 
 
 ### Built With
 
-* []()
-* []()
-* []()
-
+This section should list any major frameworks that you built your project using.
+* [PHP](https://www.php.net/)
+* [XAMPP](https://www.apachefriends.org/index.html)
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+It is important that before starting you have an environment capable of running PHP in a version higher than 7.2. As we are going to use XAMPP we will be running 8 version which is the newest one.
+Here you can see the PHP releases:
 
-### Installation
+https://www.php.net/downloads
 
-1. Clone the repo
+
+### Installing
+
+To intalling and use this project you will need:
+
+1. Install XAMPP
+
+   https://www.apachefriends.org/download.html
+
+2. Press start in order to turn on the services.
+
+3. Go to XAMPP application and press the tab Volumes and press mount button once it is mounted you  can press the button explore to open the XAMPP directory.
+
+4. Clone the repo inside of htdocs for our project.
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/soyyogi/PHP_FileSystem_explorer.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
-
 
 
 <!-- CONTRIBUTING -->
@@ -147,12 +119,10 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 
-
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 
 <!-- CONTACT -->
@@ -160,20 +130,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
-
+Project Link: [https://github.com/soyyogi/PHP_FileSystem_explorer.git](https://github.com/soyyogi/PHP_FileSystem_explorer.git)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
