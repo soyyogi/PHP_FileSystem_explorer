@@ -106,7 +106,6 @@ if (isset($_POST['type'])) {
                     $_SESSION['size'] = array_merge($_SESSION['size'],[$_POST['title']=>$fileSize]);
                 }
             }
-
             $_SESSION['rename'] = true;
             $_SESSION['renameRedirect'] = $base . '/actions.php?action=delete&name=' . $_POST['title'];
 
@@ -134,6 +133,8 @@ if (isset($_POST['type'])) {
                 // Adding new file time stamp and size
                 $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'],[$_POST['title']=>$createdAt]);
                 $_SESSION['size'] = array_merge($_SESSION['size'],[$_POST['title']=>$fileSize]);
+
+                $_SESSION['message'] = 'Successufully copied!';
             }
             break;
 
