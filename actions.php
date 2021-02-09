@@ -14,7 +14,7 @@ if (isset($_POST['type'])) {
                 $createdAt = date_create("now")->format("d-m-y H:i:s");
                 $fileSize = filesize($path);
                 $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'], [$_POST['title']=>$createdAt]);
-                $_SESSION['size'] = array_merge($_SESSION['size'], [$_POST['title']=>$filize]);
+                $_SESSION['size'] = array_merge($_SESSION['size'], [$_POST['title']=>$fileSize]);
                 $_SESSION['message'] = 'Successfully created new directory!';
             } else {
                 $_SESSION['message'] = 'Directory already exists!';
@@ -94,15 +94,47 @@ if (isset($_POST['type'])) {
             break;
 
         case "move":
-            // ! Copy file to different folder and delete the old one
+            if(!empty($_POST['chooseFolder'])) {
+                $createdAt = date_create("now")->format("d-m-y H:i:s");
+                $fileSize = filesize($path);
+                if (($_POST['chooseFolder'] != ".." && $_SESSION['currentPath'] == 'root' ) || ($_POST['chooseFolder'] == ".." && $_SESSION['currentPath'] != 'root')) {
+                    $destination = $_SESSION['currentPath'] . "/" . $_POST['chooseFolder'] . "/" . $_POST['title'];
+                    $targetElement = $_SESSION['currentPath'] . "/" . $_POST['title'];
+                    copy($targetElement, $destination);
+                    // Adding new file time stamp and size
+                    $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'],[$_POST['title']=>$createdAt]);
+                    $_SESSION['size'] = array_merge($_SESSION['size'],[$_POST['title']=>$fileSize]);
+                }
+            }
+
+            $_SESSION['rename'] = true;
+            $_SESSION['renameRedirect'] = $base . '/actions.php?action=delete&name=' . $_POST['title'];
+
             break;
 
         case "copy":
-            // ! Just copy the file in different folder or if in same folder copy with different name (name + copy)
-            break;
-
-        case "edit":
-            // todo replace the date Session[modifiedAt][$name] = new date;
+            if(!empty($_POST['chooseFolder'])) {
+                $createdAt = date_create("now")->format("d-m-y H:i:s");
+                $fileSize = filesize($path);
+                $destination = $_SESSION['currentPath'] ."/" . $_POST['chooseFolder'] . "/" . $_POST['title'];
+                if ($_POST['chooseFolder'] == "..") {
+                    $destination = $_SESSION['currentPath'] . "/" . $_POST['title'];
+                }
+                $targetElement = $_SESSION['currentPath'] . "/" . $_POST['title'];
+                if ($targetElement == $destination) {
+                    $destination = $_SESSION['currentPath'] . "/copy " . $_POST['title'];
+                    if (($pos = strpos($destination, "/")) !== FALSE) {
+                        $copiedElement = substr($destination, $pos+1);
+                         // Adding new file time stamp and size
+                        $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'],[$copiedElement=>$createdAt]);
+                        $_SESSION['size'] = array_merge($_SESSION['size'],[$copiedElement=>$fileSize]);
+                    }
+                }
+                copy($targetElement, $destination);
+                // Adding new file time stamp and size
+                $_SESSION['createdAt'] = array_merge($_SESSION['createdAt'],[$_POST['title']=>$createdAt]);
+                $_SESSION['size'] = array_merge($_SESSION['size'],[$_POST['title']=>$fileSize]);
+            }
             break;
 
         default:

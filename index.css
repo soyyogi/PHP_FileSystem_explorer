@@ -17,16 +17,19 @@ body {
   font-family: 'Lato', sans-serif;
   font-weight: 400;
 }
-a {
+a,
+li.action-option {
   text-decoration: none;
   text-transform: capitalize;
   font-weight: 700;
   color: var(--primary);
 }
 a:hover,
-a:visited {
+a:visited,
+li.action-option:hover {
   color: var(--secondary);
 }
+
 i {
   cursor: pointer;
 }
@@ -120,6 +123,9 @@ a.logo:hover {
 .create-item-form > button {
   padding: 10px;
   outline: none;
+}
+.move-doc {
+  padding: 10px 0;
 }
 
 main {

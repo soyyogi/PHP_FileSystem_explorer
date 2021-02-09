@@ -9,7 +9,7 @@ if (!isset($_SESSION['size'])) {
 // unset($_SESSION['createdAt']);
 // unset($_SESSION['size']);
 
-$user = 'yogi';
+$user = 'faber';
 $_SESSION['basePath'] = $user === 'yogi' ? 'http://localhost/PHP_FileSystem_explorer' : 'http://192.168.64.2/PHP_FileSystem_explorer';
 
 $root = 'root';
@@ -123,6 +123,20 @@ function convertSize($bytes) {
     <input type="text" name="title" id="title" placeholder="title" maxlength="20">
     <input type="text" name="newtitle" id="newtitle" placeholder="new title" maxlength="20" hidden>
     <textarea name="body" id="body" cols="30" rows="10" hidden placeholder="some text here..."></textarea>
+    <div class="move-doc hidden">
+      <label for="chooseFolder" id="chooseFolder-label">Choose a folder</label>
+      <select name="chooseFolder" id="chooseFolder">
+        <?php
+          $showDocs = array_slice(scandir($_SESSION['currentPath']), 1);
+          foreach ($showDocs as $i => $name) {
+            $path = $_SESSION['currentPath'] . '/' . $name;
+            if (is_dir($path)) {
+              echo '<option value="'.$name.'">'.$name.'</option>';
+            }
+          }
+        ?>
+      </select>
+    </div>
     <button type="submit">Submit</button>
   </form>
 
@@ -154,9 +168,8 @@ function convertSize($bytes) {
             <ul class="action-options hidden">
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=open">Open</a></li>
               <li class="action-option" data-action-rename data-name="'.$name.'">Rename</li>
-              <li class="action-option" data-name="'.$name.'">Edit</li>
-              <li class="action-option">Copy</li>
-              <li class="action-option">Move</li>
+              <li class="action-option" data-action-copy data-name="' .$name.'" >Copy</li>
+              <li class="action-option" data-action-move data-name="' .$name.'">Move</li>
               <li class="action-option"><a href="' .$_SESSION['basePath'] . '/actions.php?name=' . $name . '&action=delete">Delete</a></li>
             </ul>
           </span>
